@@ -3,7 +3,9 @@ import { IBook } from "../interfaces/book.interface";
 
 const bookSchema = new Schema<IBook>(
   {
-    title: { type: String, require: true, trim: true },
+    title: { type: String, 
+      require: [true, "Title is required"], 
+      trim: true },
     author: { type: String, require: true, trim: true },
     genre: {
       type: String,
@@ -43,6 +45,8 @@ const bookSchema = new Schema<IBook>(
   },
 );
 
+
+  // instance method
 bookSchema.methods.deccreaseCopies = async function (quantity: number) {
   if (this.copies < quantity) throw new Error("Not enough copies available");
   this.copies -= quantity;

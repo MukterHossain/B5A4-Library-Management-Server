@@ -32,11 +32,14 @@ exports.booksRoutes.post("/create-book", (req, res, next) => __awaiter(void 0, v
 }));
 exports.booksRoutes.get("/", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { filter, sortBy = "createdAt", sort = "asc", limit = "10", } = req.query;
+        const { filter, sortBy = "createdAt", sort = "asc", limit = "10" } = req.query;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const query = {};
         if (filter) {
             query.genre = filter;
         }
+        // const bookSorting: { [key: string]: 1 | -1 } = {};
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const bookSorting = {};
         bookSorting[sortBy] = sort === "desc" ? -1 : 1;
         const book = yield book_model_1.Book.find(query)
@@ -66,15 +69,20 @@ exports.booksRoutes.get("/:bookId", (req, res, next) => __awaiter(void 0, void 0
         next(error);
     }
 }));
-exports.booksRoutes.patch("/:bookId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const bookId = req.params.bookId;
-    const updatedBody = req.body;
-    const book = yield book_model_1.Book.findByIdAndUpdate(bookId, updatedBody, { new: true });
-    res.status(201).json({
-        success: true,
-        message: "Book updated successfully",
-        data: book,
-    });
+exports.booksRoutes.patch("/:bookId", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const bookId = req.params.bookId;
+        const updatedBody = req.body;
+        const book = yield book_model_1.Book.findByIdAndUpdate(bookId, updatedBody, { new: true });
+        res.status(201).json({
+            success: true,
+            message: "Book updated successfully",
+            data: book,
+        });
+    }
+    catch (error) {
+        next(error);
+    }
 }));
 exports.booksRoutes.delete("/:bookId", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
