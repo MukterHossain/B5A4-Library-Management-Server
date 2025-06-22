@@ -27,6 +27,7 @@ A simple RESTful API built with Express, MonoDB with Mongoose and Typescript.
 * Use of Aggregation Pipeline
 * Filtering and Sorting books by genre, date
 * Proper error handling and generic response format
+* Mongoose middleware(**pre**, **post**)
 
 ## API Endpoints
 
