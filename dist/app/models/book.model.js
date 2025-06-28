@@ -51,6 +51,7 @@ const bookSchema = new mongoose_1.Schema({
     timestamps: true,
     versionKey: false,
 });
+// instance method
 bookSchema.methods.deccreaseCopies = function (quantity) {
     return __awaiter(this, void 0, void 0, function* () {
         if (this.copies < quantity)

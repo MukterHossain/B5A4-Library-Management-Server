@@ -19,16 +19,22 @@ const book_model_1 = require("../models/book.model");
 exports.borrowRoutes = express_1.default.Router();
 exports.borrowRoutes.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { book, quantity, dueDate } = req.body;
-        const findBook = (yield book_model_1.Book.findById(book));
-        if (!findBook) {
+        const { book: booId, quantity, dueDate } = req.body;
+        const book = (yield book_model_1.Book.findById(booId));
+        if (!book) {
             res.status(404).json({
                 success: false,
                 message: "Book not found",
             });
         }
+        if (book.copies < quantity) {
+            res.status(400).json({
+                success: false,
+                message: "Not enough copies available"
+            });
+        }
         // use instance method
-        yield findBook.deccreaseCopies(quantity);
+        yield book.deccreaseCopies(quantity);
         const borrow = yield borrow_model_1.Borrow.create({ book, quantity, dueDate });
         res.status(201).json({
             success: true,

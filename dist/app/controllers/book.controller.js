@@ -16,7 +16,7 @@ exports.booksRoutes = void 0;
 const express_1 = __importDefault(require("express"));
 const book_model_1 = require("../models/book.model");
 exports.booksRoutes = express_1.default.Router();
-exports.booksRoutes.post("/create-book", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.booksRoutes.post("/", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const body = req.body;
         const book = yield book_model_1.Book.create(body);
@@ -38,7 +38,6 @@ exports.booksRoutes.get("/", (req, res, next) => __awaiter(void 0, void 0, void 
         if (filter) {
             query.genre = filter;
         }
-        // const bookSorting: { [key: string]: 1 | -1 } = {};
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const bookSorting = {};
         bookSorting[sortBy] = sort === "desc" ? -1 : 1;
@@ -69,12 +68,12 @@ exports.booksRoutes.get("/:bookId", (req, res, next) => __awaiter(void 0, void 0
         next(error);
     }
 }));
-exports.booksRoutes.patch("/:bookId", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.booksRoutes.put("/:bookId", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bookId = req.params.bookId;
         const updatedBody = req.body;
         const book = yield book_model_1.Book.findByIdAndUpdate(bookId, updatedBody, { new: true });
-        res.status(201).json({
+        res.status(200).json({
             success: true,
             message: "Book updated successfully",
             data: book,
