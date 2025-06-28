@@ -32,8 +32,8 @@ A simple RESTful API built with Express, MonoDB with Mongoose and Typescript.
 ## API Endpoints
 
 * **GET /api/books** Get all books by filter, sort and limit method
-* **POST /api/books/create-book** Create a Book
-* **PATCH /api/books/:bookId** Update single book
+* **POST /api/books** Create a Book
+* **PUT /api/books/:bookId** Update single book
 * **DELETE /api/books/:bookId** Delete single book
 
 * **POST /api/borrow** Create a borrowed book with conditionaly
