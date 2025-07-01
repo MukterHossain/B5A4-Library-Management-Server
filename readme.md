@@ -1,5 +1,1 @@
 # B5A4-LIBRARY-MANAGEMENT-SERVER
-
-
-PORT=5000
-DB_URL=mongodb+srv://LibraryManagementApp:1TNz033Ml6fSZZsL@cluster0.xwmcx9f.mongodb.net/LibraryManagementApp?retryWrites=true&w=majority&appName=Cluster0
