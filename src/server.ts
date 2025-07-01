@@ -5,13 +5,9 @@ dotenv.config();
 
 
 
-
-
 async function main() {
   try {
-    await mongoose.connect(
-      `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.xwmcx9f.mongodb.net/LibraryManagement?retryWrites=true&w=majority&appName=Cluster0`,
-    );
+    await mongoose.connect(process.env.DB_URL!);
     app.listen(process.env.PORT, () => {
       console.log(`App is Listenin on port ${process.env.PORT}`);
     });

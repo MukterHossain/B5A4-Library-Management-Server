@@ -13,7 +13,7 @@ app.use("/api/borrow", borrowRoutes);
 app.use(ErrorHandler);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome to Libray Management App");
+  res.send("Welcome to Libray Management Server App");
 });
 
 export default app;
