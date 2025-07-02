@@ -28,16 +28,4 @@ const borrowSchema = new Schema<IBorrow>(
   },
 );
 
-borrowSchema.pre("save", async function (next) {
-  console.log("Borrowing in progress...")
-  if(this.quantity <=0){
-    throw new Error("Quantity must be greater than 0")
-  }
-  next()
-})
-
-borrowSchema.post("save", function(doc){
-  console.log(`Borrow saved for id: ${doc.book}`)
-})
-
 export const Borrow = model("Borrow", borrowSchema);

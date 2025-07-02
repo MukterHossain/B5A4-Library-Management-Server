@@ -20,23 +20,11 @@ booksRoutes.post("/", async (req: Request, res: Response, next: NextFunction) =>
 
 booksRoutes.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const {filter, sortBy = "createdAt", sort = "asc", limit = "10" } = req.query;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const query:any = {};
-    if (filter) {
-      query.genre = filter;
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const bookSorting: any = {};
-    bookSorting[sortBy as string] = sort === "desc" ? -1 : 1;
-
-    const book = await Book.find(query)
-      .sort(bookSorting)
-      .limit(parseInt(limit as string));
+    const books = await Book.find()
     res.status(201).json({
       success: true,
       message: "Books retrive successfully",
-      data: book,
+      data: books,
     });
   }  catch (error) {
       next(error)
@@ -44,26 +32,26 @@ booksRoutes.get("/", async (req: Request, res: Response, next: NextFunction) => 
   }
 );
 
-booksRoutes.get("/:bookId", async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const bookId = req.params.bookId;
-      const book = await Book.findById(bookId);
-      res.status(201).json({
-        success: true,
-        message: "Book retrieved successfully",
-        data: book,
-      });
-    } catch (error) {
-      next(error);
-    }
-  },
-);
+// booksRoutes.get("/:bookId", async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//       const bookId = req.params.bookId;
+//       const book = await Book.findById(bookId);
+//       res.status(201).json({
+//         success: true,
+//         message: "Book retrieved successfully",
+//         data: book,
+//       });
+//     } catch (error) {
+//       next(error);
+//     }
+//   },
+// );
 
-booksRoutes.put("/:bookId", async (req: Request, res: Response, next: NextFunction) => {
+booksRoutes.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const bookId = req.params.bookId;
-  const updatedBody = req.body;
-  const book = await Book.findByIdAndUpdate(bookId, updatedBody, { new: true });
+    const id = req.params.id;
+  const body = req.body;
+  const book = await Book.findByIdAndUpdate(id, body, { new: true });
   res.status(200).json({
     success: true,
     message: "Book updated successfully",
@@ -76,10 +64,10 @@ booksRoutes.put("/:bookId", async (req: Request, res: Response, next: NextFuncti
 
 
 
-booksRoutes.delete("/:bookId", async (req: Request, res: Response, next: NextFunction) => {
+booksRoutes.delete("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const bookId = req.params.bookId;
-  await Book.findByIdAndDelete(bookId);
+    const id = req.params.id;
+  await Book.findByIdAndDelete(id);
   res.status(201).json({
     success: true,
     message: "Book deleted successfully",
