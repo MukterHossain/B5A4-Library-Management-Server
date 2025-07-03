@@ -3,7 +3,7 @@ import { Book } from "../models/book.model";
 
 export const booksRoutes = express.Router();
 
-booksRoutes.post("/", async (req: Request, res: Response, next: NextFunction) => {
+booksRoutes.post("/books", async (req: Request, res: Response, next: NextFunction) => {
     try {
       const body = req.body;
       const book = await Book.create(body);
@@ -18,7 +18,7 @@ booksRoutes.post("/", async (req: Request, res: Response, next: NextFunction) =>
   },
 );
 
-booksRoutes.get("/", async (req: Request, res: Response, next: NextFunction) => {
+booksRoutes.get("/books", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const books = await Book.find()
     res.status(201).json({
@@ -47,7 +47,7 @@ booksRoutes.get("/", async (req: Request, res: Response, next: NextFunction) => 
 //   },
 // );
 
-booksRoutes.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
+booksRoutes.put("/books/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
   const body = req.body;

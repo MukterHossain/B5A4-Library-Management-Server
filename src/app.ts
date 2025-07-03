@@ -8,8 +8,8 @@ const app: Application = express();
 app.use(express.json());
 app.use(cors());
 
-app.use("/books", booksRoutes);
-app.use("/borrow", borrowRoutes);
+app.use("/", booksRoutes);
+app.use("/", borrowRoutes);
 app.use(ErrorHandler);
 
 app.get("/", (req: Request, res: Response) => {
