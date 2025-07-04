@@ -1,27 +1,27 @@
-import express, { Request, Response} from "express";
+import express, { Request, Response } from "express";
 import { Borrow } from "../models/borrow.model";
 import { Book } from "../models/book.model";
 
 export const borrowRoutes = express.Router();
 
-borrowRoutes.post("/:bookId", async (req: Request, res: Response) => {
+borrowRoutes.post("/:id", async (req: Request, res: Response) => {
   try {
-    const bookId = req.params.bookId
+    const id = req.params.id
     const { quantity, dueDate } = req.body;
-    const book = await Book.findById(bookId);
-    if(!book || book.available === false || book.copies < quantity){
-       res.status(400).json({
+    const book = await Book.findById(id);
+    if (!book || book.available === false || book.copies < quantity) {
+      res.status(400).json({
         success: false,
         message: "Book are not available or not enough copies"
       })
       return;
     }
 
-    book.copies -=quantity;
+    book.copies -= quantity;
     book.available = book.copies > 0;
     await book.save()
 
-    const borrow = await Borrow.create({ book:book._id, quantity, dueDate });
+    const borrow = await Borrow.create({ book: book._id, quantity, dueDate });
     res.status(201).json({
       success: true,
       message: "Book borrowed successfully",
@@ -30,7 +30,7 @@ borrowRoutes.post("/:bookId", async (req: Request, res: Response) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(400).json({
-      
+
       success: false,
       message: "Borrow failed",
       error: error.message,
@@ -38,7 +38,7 @@ borrowRoutes.post("/:bookId", async (req: Request, res: Response) => {
   }
 });
 
-borrowRoutes.get("/summary", async (req: Request, res: Response) => {
+borrowRoutes.get("/", async (req: Request, res: Response) => {
   try {
     const borrow = await Borrow.aggregate([
       {
@@ -61,11 +61,10 @@ borrowRoutes.get("/summary", async (req: Request, res: Response) => {
       {
         $project: {
           _id: 0,
-          book: {
-            title: "$book.title",
-            isbn: "$book.isbn",
-          },
+          title: "$book.title",
+          isbn: "$book.isbn",
           totalQuantity: 1,
+
         },
       },
     ]);

@@ -3,7 +3,7 @@ import { Book } from "../models/book.model";
 
 export const booksRoutes = express.Router();
 
-booksRoutes.post("/books", async (req: Request, res: Response, next: NextFunction) => {
+booksRoutes.post("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
       const body = req.body;
       const book = await Book.create(body);
@@ -18,7 +18,7 @@ booksRoutes.post("/books", async (req: Request, res: Response, next: NextFunctio
   },
 );
 
-booksRoutes.get("/books", async (req: Request, res: Response, next: NextFunction) => {
+booksRoutes.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const books = await Book.find()
     res.status(201).json({
@@ -32,22 +32,22 @@ booksRoutes.get("/books", async (req: Request, res: Response, next: NextFunction
   }
 );
 
-// booksRoutes.get("/:bookId", async (req: Request, res: Response, next: NextFunction) => {
-//     try {
-//       const bookId = req.params.bookId;
-//       const book = await Book.findById(bookId);
-//       res.status(201).json({
-//         success: true,
-//         message: "Book retrieved successfully",
-//         data: book,
-//       });
-//     } catch (error) {
-//       next(error);
-//     }
-//   },
-// );
+booksRoutes.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const id = req.params.id;
+      const book = await Book.findById(id);
+      res.status(201).json({
+        success: true,
+        message: "Book retrieved single successfully",
+        data: book,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 
-booksRoutes.put("/books/:id", async (req: Request, res: Response, next: NextFunction) => {
+booksRoutes.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
   const body = req.body;
