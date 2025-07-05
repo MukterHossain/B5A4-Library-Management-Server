@@ -45,21 +45,4 @@ const bookSchema = new Schema<IBook>(
   },
 );
 
-
-  // instance method
-// bookSchema.methods.deccreaseCopies = async function (quantity: number) {
-//   if (this.copies < quantity) throw new Error("Not enough copies available");
-//   this.copies -= quantity;
-//   if (this.copies === 0) this.available = false;
-//   await this.save();
-// };
-
-// export interface BookDocument {
-//   title: string;
-//   copies: number;
-//   available: boolean;
-//   // eslint-disable-next-line no-unused-vars
-//   deccreaseCopies: (quantity: number) => Promise<void>;
-// }
-
 export const Book = model("Book", bookSchema);
