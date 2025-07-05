@@ -1,5 +1,7 @@
 # B5A4-LIBRARY-MANAGEMENT-SERVER
 
+* [live link: https://b5-a4-library-management-server.vercel.app/api]
+  
 A simple RESTful API built with Express, MonoDB with Mongoose and Typescript.
 
 ## Setup Section
